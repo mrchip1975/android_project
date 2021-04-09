@@ -1,13 +1,21 @@
 package it.learnathome.indovinalaparola.utils;
 
 import android.content.Context;
+import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 public class GameMaster {
     private static String secretWord;
     private static Random selector = new Random();
+
     private GameMaster() {}
     public static String startGame(Context ctx) {
         GameMaster.secretWord = WordSelector.getWord(ctx);
@@ -36,6 +44,7 @@ public class GameMaster {
         while(vector[position]!='\0') {
             position = selector.nextInt(vector.length);
         }
+
         return position;
     }
     public static String checkAttempt(String gamerAttempt) {
@@ -45,5 +54,29 @@ public class GameMaster {
                String.valueOf(GameMaster.secretWord.charAt(i)):"-");
         }
         return buffer.toString();
+    }
+    public static String updateShuffledText(String shuffledText) {
+        if(shuffledText.length()>GameMaster.secretWord.length()) {
+            List<Character> chars;
+            do {
+                chars = new ArrayList<>();
+                for (char ch:shuffledText.toCharArray()) {
+                    chars.add(Character.valueOf(ch));
+                }
+                chars.remove(Character.valueOf(shuffledText.charAt(selector.nextInt(shuffledText.length()))));
+                if(isValid(chars))
+                    break;
+            } while(true);
+
+            return chars.toString().replace("[","").replace("]","").replaceAll(", ","");
+        } else return shuffledText;
+    }
+    private static boolean isValid(List<Character> availableChars) {
+        List<Character> copy = new ArrayList<>(availableChars);
+        for (char ch: GameMaster.secretWord.toCharArray()) {
+            if(!copy.remove(Character.valueOf(ch)))
+                return false;
+        }
+        return true;
     }
 }

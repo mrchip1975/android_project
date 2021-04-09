@@ -32,5 +32,7 @@ public class MainActivity extends AppCompatActivity {
         TextView yourProgressLbl = findViewById(R.id.yourProgressText);
         yourProgressLbl.setText(checkedResult);
         myAttemptField.setText("");
+        TextView shuffledTextLbl = findViewById(R.id.shuffledText);
+        shuffledTextLbl.setText(GameMaster.updateShuffledText(shuffledTextLbl.getText().toString()));
     }
 }
