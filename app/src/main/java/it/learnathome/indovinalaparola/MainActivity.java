@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import it.learnathome.indovinalaparola.utils.GameMaster;
 
@@ -28,6 +29,11 @@ public class MainActivity extends AppCompatActivity {
         attemptCounterLbl.setText(String.valueOf(counter));
         EditText myAttemptField = findViewById(R.id.myAttemptField);
         String myAttemptFieldContent = myAttemptField.getText().toString();
+        if(GameMaster.youWin(myAttemptFieldContent)) {
+            Toast.makeText(MainActivity.this,getResources().getString(R.string.win_message),Toast.LENGTH_LONG).show();
+            return;
+        }
+
         String checkedResult = GameMaster.checkAttempt(myAttemptFieldContent);
         TextView yourProgressLbl = findViewById(R.id.yourProgressText);
         yourProgressLbl.setText(checkedResult);
