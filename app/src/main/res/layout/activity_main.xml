@@ -29,6 +29,7 @@
             android:id="@+id/startGameBtn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/start_img_btn"
+            android:onClick="startGame"
             app:srcCompat="@drawable/ic_racing_flag" />
 
         <TextView
@@ -51,7 +52,8 @@
             android:paddingStart="@dimen/header_padding"
             android:paddingTop="?attr/dialogPreferredPadding"
             android:paddingEnd="@dimen/header_padding"
-            android:paddingBottom="?attr/dialogPreferredPadding" />
+            android:paddingBottom="?attr/dialogPreferredPadding"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/yourProgressText"
@@ -60,7 +62,8 @@
             android:paddingTop="?attr/dialogPreferredPadding"
             android:paddingBottom="?attr/dialogPreferredPadding"
             android:textAlignment="center"
-            android:textSize="18sp" />
+            android:textColor="@color/textcolur"
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/checkBtn"
@@ -68,6 +71,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/header_textcolour"
             android:fontFamily="@font/baloo_bhaina"
+            android:onClick="checkAttempt"
             android:text="@string/check_attempt_btn_lbl"
             android:textSize="24sp"
             app:icon="@android:drawable/ic_menu_mylocation"
