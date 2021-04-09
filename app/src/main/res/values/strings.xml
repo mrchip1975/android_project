@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Indovina La Parola</string>
+    <string name="version_label">Ver.1.0</string>
+    <string name="hint_player_attempt">Scrivi una parola</string>
+    <string name="check_attempt_btn_lbl">Verifica Tentativo!</string>
+    <array name="secret_words">
+        <item>android</item>
+        <item>paperino</item>
+        <item>pcacademy</item>
+        <item>programmazione</item>
+        <item>ciao mondo</item>
+        <item>carbonara</item>
+        <item>campionato</item>
+        <item>giulio stampa</item>
+    </array>
+</resources>
