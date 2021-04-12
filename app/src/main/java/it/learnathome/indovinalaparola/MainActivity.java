@@ -1,7 +1,9 @@
 package it.learnathome.indovinalaparola;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -22,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
         shuffledTextLbl.setText(GameMaster.startGame(MainActivity.this));
         TextView yourProgressLbl = findViewById(R.id.yourProgressText);
         yourProgressLbl.setText(GameMaster.buildCryptedWord());
+        TextView attemptCounterLbl = findViewById(R.id.attemptCounter);
+        attemptCounterLbl.setText("0");
     }
     public void checkAttempt(View v) {
         counter++;
@@ -40,5 +44,15 @@ public class MainActivity extends AppCompatActivity {
         myAttemptField.setText("");
         TextView shuffledTextLbl = findViewById(R.id.shuffledText);
         shuffledTextLbl.setText(GameMaster.updateShuffledText(shuffledTextLbl.getText().toString()));
+    }
+    private void buildAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setMessage(getResources().getString(R.string.win_message));
+        builder.setTitle(getResources().getString(R.string.app_name));
+        builder.setCancelable(false);
+        builder.setPositiveButton(getResources().getString(android.R.string.yes), (dialog, which) -> {
+            dialog.dismiss();
+            startGame(null);});
+        builder.setNegativeButton(getResources().getString(android.R.string.no),(dialog,which)->finish());
     }
 }
