@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
         EditText myAttemptField = findViewById(R.id.myAttemptField);
         String myAttemptFieldContent = myAttemptField.getText().toString();
         if(GameMaster.youWin(myAttemptFieldContent)) {
-            Toast.makeText(MainActivity.this,getResources().getString(R.string.win_message),Toast.LENGTH_LONG).show();
+            //Toast.makeText(MainActivity.this,getResources().getString(R.string.win_message),Toast.LENGTH_LONG).show();
+            buildAlert();
             return;
         }
 
@@ -54,5 +55,6 @@ public class MainActivity extends AppCompatActivity {
             dialog.dismiss();
             startGame(null);});
         builder.setNegativeButton(getResources().getString(android.R.string.no),(dialog,which)->finish());
+        builder.create().show();
     }
 }
