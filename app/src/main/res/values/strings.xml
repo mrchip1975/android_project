@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">Indovina La Parola</string>
-    <string name="version_label">Ver.1.1</string>
+    <string name="version_label">Ver.1.1.1</string>
     <string name="hint_player_attempt">Scrivi una parola</string>
     <string name="check_attempt_btn_lbl">Verifica Tentativo!</string>
     <string name="win_message">Complimenti hai indovinato la parola segreta!\nNuova Partita?</string>
+    <string name="credits_menu_item_lbl">Ringraziamenti</string>
+    <string name="about_menu_item_lbl">Info app</string>
     <array name="secret_words">
         <item>android</item>
         <item>paperino</item>

@@ -2,4 +2,5 @@
 <resources>
     <dimen name="header_padding">8sp</dimen>
     <dimen name="start_img_btn">96sp</dimen>
+    <dimen name="win_image_size">192sp</dimen>
 </resources>

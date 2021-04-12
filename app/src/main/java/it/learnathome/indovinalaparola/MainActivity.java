@@ -1,10 +1,15 @@
 package it.learnathome.indovinalaparola;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
         yourProgressLbl.setText(GameMaster.buildCryptedWord());
         TextView attemptCounterLbl = findViewById(R.id.attemptCounter);
         attemptCounterLbl.setText("0");
+        this.counter = 0;
+        EditText myAttemptField = findViewById(R.id.myAttemptField);
+        myAttemptField.setText("");
     }
     public void checkAttempt(View v) {
         counter++;
@@ -46,10 +54,28 @@ public class MainActivity extends AppCompatActivity {
         TextView shuffledTextLbl = findViewById(R.id.shuffledText);
         shuffledTextLbl.setText(GameMaster.updateShuffledText(shuffledTextLbl.getText().toString()));
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.my_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
     private void buildAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setMessage(getResources().getString(R.string.win_message));
-        builder.setTitle(getResources().getString(R.string.app_name));
+       // builder.setMessage(getResources().getString(R.string.win_message));
+       // builder.setTitle(getResources().getString(R.string.app_name));
+        LayoutInflater inflater = getLayoutInflater();
+        View screenWin = inflater.inflate(R.layout.win_layout,null);
+        TextView winText = screenWin.findViewById(R.id.winText);
+        winText.setText(getResources().getString(R.string.win_message));
+        builder.setView(screenWin);
         builder.setCancelable(false);
         builder.setPositiveButton(getResources().getString(android.R.string.yes), (dialog, which) -> {
             dialog.dismiss();
