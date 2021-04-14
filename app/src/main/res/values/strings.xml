@@ -26,4 +26,6 @@
     <string name="sender_lbl">Mittente</string>
     <string name="subject_lbl">Oggetto</string>
     <string name="content_lbl">Messaggio</string>
+    <string name="send_mail_successfull">Mail inviata con successo!</string>
+    <string name="send_mail_error">Problemi durante l\'invio della mail</string>
 </resources>

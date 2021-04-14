@@ -21,17 +21,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="@string/sender_lbl"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline3" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
@@ -39,32 +28,23 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="133dp" />
 
-    <EditText
-        android:id="@+id/senderField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/textView8"
-        app:layout_constraintEnd_toEndOf="@+id/textView7"
-        app:layout_constraintHorizontal_bias="0.486"
-        app:layout_constraintStart_toStartOf="@+id/textView7"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
     <TextView
         android:id="@+id/textView8"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="1dp"
         android:text="@string/subject_lbl"
         app:layout_constraintBottom_toTopOf="@+id/subjectField"
-        app:layout_constraintEnd_toEndOf="@+id/senderField"
-        app:layout_constraintStart_toStartOf="@+id/senderField"
-        app:layout_constraintTop_toBottomOf="@+id/senderField" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <EditText
         android:id="@+id/subjectField"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/subject_lbl"
@@ -76,7 +56,7 @@
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/content_lbl"
         app:layout_constraintBottom_toTopOf="@+id/contentField"
@@ -86,10 +66,10 @@
 
     <EditText
         android:id="@+id/contentField"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
-        android:layout_marginBottom="115dp"
+        android:layout_marginBottom="32dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="@string/content_lbl"
@@ -102,12 +82,15 @@
 
     <Button
         android:id="@+id/send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="56dp"
         android:layout_marginBottom="32dp"
         android:backgroundTint="@color/header_textcolour"
+        android:backgroundTintMode="src_atop"
         android:text="@string/send_btn_lbl"
+        app:cornerRadius="10dp"
         app:icon="@android:drawable/ic_menu_send"
+        app:iconGravity="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

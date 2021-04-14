@@ -4,22 +4,32 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Arrays;
 
 import it.learnathome.indovinalaparola.R;
+
+import static android.app.Activity.RESULT_OK;
+import static it.learnathome.indovinalaparola.R.color.header_textcolour;
 
 /**
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
 public class SendMailFragment extends Fragment {
- public SendMailFragment() {
+    private static final int SENDER_ID_ACTIVITY = 2;
+
+    public SendMailFragment() {
         // Required empty public constructor
     }
   @Override
@@ -34,14 +44,32 @@ public class SendMailFragment extends Fragment {
         EditText field;
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:"));
-        field = v.findViewById(R.id.senderField);
-        intent.putExtra(Intent.EXTRA_EMAIL, field.getText());
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"help.me.alessandro@gmail.com"});
         field = v.findViewById(R.id.subjectField);
-        intent.putExtra(Intent.EXTRA_SUBJECT, field.getText());
+        intent.putExtra(Intent.EXTRA_SUBJECT, field.getText().toString());
         field = v.findViewById(R.id.contentField);
         intent.putExtra(Intent.EXTRA_TEXT,field.getText());
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivity(intent);
+            startActivityForResult(intent,SENDER_ID_ACTIVITY);
         }
     }
- }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_OK) {
+            if (requestCode==SENDER_ID_ACTIVITY) {
+                Toast toast = Toast.makeText(getContext(),getString(R.string.send_mail_successfull),Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER,0,0);
+                toast.getView().setBackgroundColor(getResources().getColor(header_textcolour,getActivity().getTheme()));
+                TextView testo = toast.getView().findViewById(android.R.id.message);
+                testo.setTextColor(getResources().getColor(android.R.color.white,getActivity().getTheme()));
+                toast.show();
+            }
+        } else {
+            Toast toast = Toast.makeText(getContext(),getString(R.string.send_mail_error),Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER,0,0);
+            toast.show();
+        }
+    }
+}
