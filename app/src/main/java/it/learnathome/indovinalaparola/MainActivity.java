@@ -1,11 +1,14 @@
 package it.learnathome.indovinalaparola;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,14 +18,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import it.learnathome.indovinalaparola.screen.AboutActivity;
 import it.learnathome.indovinalaparola.utils.GameMaster;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int ABOUT_INTENT_ID = 1;
     private int counter = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d("onCreate","onCreate avviato");
     }
     public void startGame(View v) {
         TextView shuffledTextLbl = findViewById(R.id.shuffledText);
@@ -64,7 +70,28 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        Intent aboutIntent = new Intent(MainActivity.this, AboutActivity.class);
+        switch(id) {
+            case R.id.creditsMenuItem:
+            case R.id.aboutMenuItem:
+                    aboutIntent.putExtra("id",id);
+                 break;
+        }
+        startActivityForResult(aboutIntent,ABOUT_INTENT_ID);
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case ABOUT_INTENT_ID: String messaggio = data.getStringExtra("messaggio");
+                                      Log.d("messaggio",messaggio+" avviato");
+
+            }
+        }
     }
 
     private void buildAlert() {
