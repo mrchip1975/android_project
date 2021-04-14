@@ -20,5 +20,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="author_lbl">Autore:\n Alessandro Grande</string>
     <string name="license_lbl">Licenza <a href='https://www.gnu.org/licenses/old-licenses/gpl-2.0.html'>GPL.2</a></string>
-    <string name="send_mail_btn_lbl">Contatta Sviluppatore</string>
+    <string name="send_mail_btn_lbl">Contattaci!</string>
+    <string name="send_mail_header">Scrivi al programmatore</string>
+    <string name="send_btn_lbl">Invia!</string>
+    <string name="sender_lbl">Mittente</string>
+    <string name="subject_lbl">Oggetto</string>
+    <string name="content_lbl">Messaggio</string>
 </resources>

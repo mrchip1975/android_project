@@ -3,6 +3,8 @@ package it.learnathome.indovinalaparola.screen.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -28,6 +30,12 @@ public class AboutFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_about, container, false);
         //TextView textView = layout.findViewById(R.id.gpl2Url);
         //textView.setMovementMethod(LinkMovementMethod.getInstance());
+        layout.findViewById(R.id.sendMail).setOnClickListener(source->{
+            FragmentManager manager = getFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(R.id.contentArea,new SendMailFragment());
+            transaction.commit();
+        });
         return layout;
     }
 }
