@@ -2,8 +2,15 @@ package it.learnathome.indovinalaparola.data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import it.learnathome.indovinalaparola.R;
 
 public class RecordManager extends SQLiteOpenHelper {
     private static final String DB_NAME = "indovina_db";
@@ -24,7 +31,7 @@ public class RecordManager extends SQLiteOpenHelper {
           onCreate(db);
         }
     }
-    public void addRecord(Record recordToSave) {
+    public void insert(Record recordToSave) {
         SQLiteDatabase db = getWritableDatabase();
         /*
         versione 1
@@ -47,5 +54,20 @@ public class RecordManager extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.update("records",recordToUpdate.convertToContent(),"id=?",new String[]{String.valueOf(recordToUpdate.getId())});
         db.close();
+    }
+    public List<Record> selectAll() {
+        SQLiteDatabase db = getReadableDatabase();
+        final List<Record> recordList = new ArrayList<>();
+        Cursor cursor = db.rawQuery("SELECT * FROM records",null);
+        while(cursor.moveToNext()){
+            Record rc = new Record();
+            rc.setId(cursor.getInt(cursor.getColumnIndex("id")))
+              .setName(cursor.getString(cursor.getColumnIndex("name")))
+              .setWord(cursor.getString(cursor.getColumnIndex("word")))
+              .setAttempts(cursor.getInt(cursor.getColumnIndex("attempts")))
+              .setDate(LocalDate.ofEpochDay(cursor.getLong(cursor.getColumnIndex("date"))));
+            recordList.add(rc);
+        }
+        return recordList;
     }
 }

@@ -82,4 +82,7 @@ public class GameMaster {
     public static boolean youWin(String playerAttempt) {
         return GameMaster.secretWord.equals(playerAttempt);
     }
+    public static String getSecretWord() {
+        return secretWord;
+    }
 }

@@ -28,4 +28,8 @@
     <string name="content_lbl">Messaggio</string>
     <string name="send_mail_successfull">Mail inviata con successo!</string>
     <string name="send_mail_error">Problemi durante l\'invio della mail</string>
+    <string name="choose_nick_lbl">Scegli le iniziali per il tuo record</string>
+    <string name="no_save">Non salvare</string>
+    <string name="yes_save">Salva Record</string>
+    <string name="record_saved">Record Salvato</string>
 </resources>

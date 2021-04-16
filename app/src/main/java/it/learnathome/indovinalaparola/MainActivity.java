@@ -18,6 +18,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.StringJoiner;
+
+import it.learnathome.indovinalaparola.data.Record;
+import it.learnathome.indovinalaparola.data.RecordManager;
 import it.learnathome.indovinalaparola.screen.AboutActivity;
 import it.learnathome.indovinalaparola.utils.GameMaster;
 
@@ -95,9 +99,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void buildAlert() {
+        buildSaveAlert();
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-       // builder.setMessage(getResources().getString(R.string.win_message));
-       // builder.setTitle(getResources().getString(R.string.app_name));
+       builder.setTitle(getResources().getString(R.string.app_name));
         LayoutInflater inflater = getLayoutInflater();
         View screenWin = inflater.inflate(R.layout.win_layout,null);
         TextView winText = screenWin.findViewById(R.id.winText);
@@ -108,6 +112,39 @@ public class MainActivity extends AppCompatActivity {
             dialog.dismiss();
             startGame(null);});
         builder.setNegativeButton(getResources().getString(android.R.string.no),(dialog,which)->finish());
+        builder.create().show();
+    }
+    private void buildSaveAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        LayoutInflater inflater = getLayoutInflater();
+        View screenSave = inflater.inflate(R.layout.save_record_layout,null);
+        View.OnClickListener l = v -> {
+            TextView source = (TextView)v;
+            char ch = source.getText().charAt(0);
+            ch++;
+            source.setText(ch<='Z'?String.valueOf(ch):"A");
+        };
+        screenSave.findViewById(R.id.firstLetter).setOnClickListener(l);
+        screenSave.findViewById(R.id.secondLetter).setOnClickListener(l);
+        screenSave.findViewById(R.id.thirdLetter).setOnClickListener(l);
+        builder.setView(screenSave);
+        builder.setNegativeButton(getString(R.string.no_save),(dialog,which)->dialog.dismiss());
+        builder.setPositiveButton(getString(R.string.yes_save),(dialog,which)->{
+            StringJoiner buffer = new StringJoiner("");
+            TextView letter = screenSave.findViewById(R.id.firstLetter);
+            buffer.add(letter.getText().toString());
+            letter = screenSave.findViewById(R.id.secondLetter);
+            buffer.add(letter.getText().toString());
+            letter = screenSave.findViewById(R.id.thirdLetter);
+            buffer.add(letter.getText().toString());
+            Record r = new Record();
+            r.setName(buffer.toString())
+             .setAttempts(counter)
+             .setWord(GameMaster.getSecretWord());
+            new RecordManager(MainActivity.this).insert(r);
+            Toast.makeText(MainActivity.this,getString(R.string.record_saved),Toast.LENGTH_LONG).show();
+            dialog.dismiss();
+        });
         builder.create().show();
     }
 }
