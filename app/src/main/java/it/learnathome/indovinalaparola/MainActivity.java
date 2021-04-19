@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
+                .getColor(R.color.header_textcolour,getTheme())));
     }
     public void startGame(View v) {
         TextView shuffledTextLbl = findViewById(R.id.shuffledText);
@@ -74,10 +77,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        Log.d("personalBest",id==R.id.personalBest?"record":"nulla");
         Intent aboutIntent = new Intent(MainActivity.this, AboutActivity.class);
         switch(id) {
+            case R.id.recordMenu:
+                return true;
             case R.id.creditsMenuItem:
             case R.id.aboutMenuItem:
+            case R.id.personalBest:
                     aboutIntent.putExtra("id",id);
                  break;
         }

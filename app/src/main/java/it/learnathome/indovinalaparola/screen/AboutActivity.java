@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +17,7 @@ import it.learnathome.indovinalaparola.MainActivity;
 import it.learnathome.indovinalaparola.R;
 import it.learnathome.indovinalaparola.screen.fragments.AboutFragment;
 import it.learnathome.indovinalaparola.screen.fragments.CreditsFragment;
+import it.learnathome.indovinalaparola.screen.fragments.RecordFragment;
 
 public class AboutActivity extends AppCompatActivity {
 
@@ -23,10 +25,13 @@ public class AboutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
+                .getColor(R.color.about_header_colour,getTheme())));
         int id = getIntent().getIntExtra("id",R.id.aboutMenuItem);
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.contentArea,id==R.id.aboutMenuItem?new AboutFragment():new CreditsFragment());
+        transaction.replace(R.id.contentArea,id==R.id.aboutMenuItem?new AboutFragment():
+                id==R.id.personalBest?new RecordFragment().setRecordType(id):new CreditsFragment());
         transaction.commit();
     }
     public void closeClick(View v) {
@@ -47,7 +52,8 @@ public class AboutActivity extends AppCompatActivity {
         int id = item.getItemId();
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.contentArea,id==R.id.aboutMenuItem?new AboutFragment():new CreditsFragment());
+        transaction.replace(R.id.contentArea,id==R.id.aboutMenuItem?new AboutFragment():
+                id==R.id.personalBest?new RecordFragment():new CreditsFragment());
         transaction.commit();
 
         return super.onOptionsItemSelected(item);

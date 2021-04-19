@@ -58,7 +58,7 @@ public class RecordManager extends SQLiteOpenHelper {
     public List<Record> selectAll() {
         SQLiteDatabase db = getReadableDatabase();
         final List<Record> recordList = new ArrayList<>();
-        Cursor cursor = db.rawQuery("SELECT * FROM records",null);
+        Cursor cursor = db.rawQuery("SELECT * FROM records ORDER BY attempts",null);
         while(cursor.moveToNext()){
             Record rc = new Record();
             rc.setId(cursor.getInt(cursor.getColumnIndex("id")))

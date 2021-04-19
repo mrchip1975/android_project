@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import java.time.LocalDate;
 
 public class Record {
+    private final static String TEMPLATE = "Nome Giocatore:%s - Parola: %s%nTentativi:%d - Data:%s";
     private int id,attempts;
     private String name,word;
     private LocalDate date=LocalDate.now();
@@ -61,4 +62,9 @@ public class Record {
         values.put("date",this.date.toEpochDay());
         return values;
     }
+    @Override
+    public String toString() {
+        return String.format(TEMPLATE,this.name,this.word,this.attempts,this.date.toString());
+    }
+
 }

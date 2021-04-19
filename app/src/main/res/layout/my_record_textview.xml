@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/baseRecordText"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/textview_roundborder"
+    android:gravity="center"
+    android:paddingTop="@dimen/header_padding"
+    android:paddingBottom="@dimen/header_padding"
+    android:text="TextView"
+    android:textColor="@color/header_textcolour"
+    android:textSize="18sp"
+    tools:layout_editor_absoluteX="16dp"
+    tools:layout_editor_absoluteY="16dp" />

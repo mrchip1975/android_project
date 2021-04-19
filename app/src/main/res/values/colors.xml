@@ -8,5 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="header_textcolour">#257A94</color>
+    <color name="second_prize_colour">#FD9727</color>
+    <color name="third_prize_colour">#B9BBC1</color>
     <color name="textcolur">#0B4D98</color>
+    <color name="about_header_colour">#09b333</color>
 </resources>
