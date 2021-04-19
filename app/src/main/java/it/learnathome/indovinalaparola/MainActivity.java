@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d("onCreate","onCreate avviato");
     }
     public void startGame(View v) {
         TextView shuffledTextLbl = findViewById(R.id.shuffledText);
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         String myAttemptFieldContent = myAttemptField.getText().toString();
         if(GameMaster.youWin(myAttemptFieldContent)) {
             //Toast.makeText(MainActivity.this,getResources().getString(R.string.win_message),Toast.LENGTH_LONG).show();
-            buildAlert();
+            buildSaveAlert();
             return;
         }
 
@@ -99,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void buildAlert() {
-        buildSaveAlert();
+
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
        builder.setTitle(getResources().getString(R.string.app_name));
         LayoutInflater inflater = getLayoutInflater();
@@ -128,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         screenSave.findViewById(R.id.secondLetter).setOnClickListener(l);
         screenSave.findViewById(R.id.thirdLetter).setOnClickListener(l);
         builder.setView(screenSave);
-        builder.setNegativeButton(getString(R.string.no_save),(dialog,which)->dialog.dismiss());
+        builder.setNegativeButton(getString(R.string.no_save),(dialog,which)->{dialog.dismiss(); buildAlert();});
         builder.setPositiveButton(getString(R.string.yes_save),(dialog,which)->{
             StringJoiner buffer = new StringJoiner("");
             TextView letter = screenSave.findViewById(R.id.firstLetter);
@@ -144,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
             new RecordManager(MainActivity.this).insert(r);
             Toast.makeText(MainActivity.this,getString(R.string.record_saved),Toast.LENGTH_LONG).show();
             dialog.dismiss();
+            buildAlert();
         });
         builder.create().show();
     }
