@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,6 +30,7 @@ import it.learnathome.indovinalaparola.utils.GameMaster;
 public class MainActivity extends AppCompatActivity {
     private static final int ABOUT_INTENT_ID = 1;
     private int counter = 0;
+    private GameTimer timer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         this.counter = 0;
         EditText myAttemptField = findViewById(R.id.myAttemptField);
         myAttemptField.setText("");
+        timer = new GameTimer(findViewById(R.id.timerLbl));
+        timer.start();
     }
     public void checkAttempt(View v) {
         counter++;
@@ -55,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         String myAttemptFieldContent = myAttemptField.getText().toString();
         if(GameMaster.youWin(myAttemptFieldContent)) {
             //Toast.makeText(MainActivity.this,getResources().getString(R.string.win_message),Toast.LENGTH_LONG).show();
+
             buildSaveAlert();
             return;
         }
@@ -121,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
         builder.create().show();
     }
     private void buildSaveAlert() {
+        timer.interrupt();
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         LayoutInflater inflater = getLayoutInflater();
         View screenSave = inflater.inflate(R.layout.save_record_layout,null);
@@ -153,5 +159,27 @@ public class MainActivity extends AppCompatActivity {
             buildAlert();
         });
         builder.create().show();
+    }
+    private class GameTimer extends Thread{
+        private TextView timerLabel;
+        public GameTimer(TextView view) {
+            this.timerLabel = view;
+        }
+        @Override
+        public void run() {
+            int minutes=0, seconds=0;
+            while(!isInterrupted()) {
+                Log.d("timer",String.valueOf(isInterrupted()));
+                for(;seconds<60;seconds++){
+                    String timer = String.format("%d:%d",minutes,seconds);
+                    runOnUiThread(()->timerLabel.setText(timer));
+                    //timerLabel.post(()->timerLabel.setText(timer));
+                    //timerLabel.postDelayed(()->timerLabel.setText(timer),1000);
+                    SystemClock.sleep(1000);
+                }
+                minutes++;
+                seconds=0;
+            }
+        }
     }
 }
