@@ -14,13 +14,13 @@ import it.learnathome.indovinalaparola.R;
 
 public class RecordManager extends SQLiteOpenHelper {
     private static final String DB_NAME = "indovina_db";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
     public RecordManager(Context ctx) {
         super(ctx,DB_NAME,null,DB_VERSION);
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-       String query = "CREATE TABLE records(id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,word TEXT,attempts INTEGER,date TEXT DEFAULT CURRENT_TIMESTAMP)";
+       String query = "CREATE TABLE records(id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,word TEXT,attempts INTEGER,date TEXT DEFAULT CURRENT_TIMESTAMP,time TEXT)";
        db.execSQL(query);
     }
 

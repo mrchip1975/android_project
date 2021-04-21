@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.time.LocalTime;
 import java.util.StringJoiner;
 
 import it.learnathome.indovinalaparola.data.Record;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int ABOUT_INTENT_ID = 1;
     private int counter = 0;
     private GameTimer timer;
+    private LocalTime time;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,7 +154,8 @@ public class MainActivity extends AppCompatActivity {
             Record r = new Record();
             r.setName(buffer.toString())
              .setAttempts(counter)
-             .setWord(GameMaster.getSecretWord());
+             .setWord(GameMaster.getSecretWord())
+             .setTime(time);
             new RecordManager(MainActivity.this).insert(r);
             Toast.makeText(MainActivity.this,getString(R.string.record_saved),Toast.LENGTH_LONG).show();
             dialog.dismiss();
@@ -169,8 +172,7 @@ public class MainActivity extends AppCompatActivity {
         public void run() {
             int minutes=0, seconds=0;
             while(!isInterrupted()) {
-                Log.d("timer",String.valueOf(isInterrupted()));
-                for(;seconds<60;seconds++){
+                 for(;seconds<60 && !isInterrupted();seconds++){
                     String timer = String.format("%d:%d",minutes,seconds);
                     runOnUiThread(()->timerLabel.setText(timer));
                     //timerLabel.post(()->timerLabel.setText(timer));
@@ -180,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
                 minutes++;
                 seconds=0;
             }
+            time = LocalTime.of(minutes/60,minutes%60,seconds);
         }
     }
 }
