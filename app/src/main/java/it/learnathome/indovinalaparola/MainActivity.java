@@ -26,13 +26,15 @@ import java.util.StringJoiner;
 import it.learnathome.indovinalaparola.data.Record;
 import it.learnathome.indovinalaparola.data.RecordManager;
 import it.learnathome.indovinalaparola.screen.AboutActivity;
+import it.learnathome.indovinalaparola.utils.AsyncTimer;
 import it.learnathome.indovinalaparola.utils.GameMaster;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AsyncTimer.Bridge {
     private static final int ABOUT_INTENT_ID = 1;
     private int counter = 0;
     private GameTimer timer;
-    private LocalTime time;
+    private AsyncTimer aTimer;
+    private String time;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +52,10 @@ public class MainActivity extends AppCompatActivity {
         this.counter = 0;
         EditText myAttemptField = findViewById(R.id.myAttemptField);
         myAttemptField.setText("");
-        timer = new GameTimer(findViewById(R.id.timerLbl));
-        timer.start();
+        /*timer = new GameTimer(findViewById(R.id.timerLbl));
+        timer.start();*/
+        aTimer = new AsyncTimer(findViewById(R.id.timerLbl),MainActivity.this);
+        aTimer.execute();
     }
     public void checkAttempt(View v) {
         counter++;
@@ -61,8 +65,9 @@ public class MainActivity extends AppCompatActivity {
         String myAttemptFieldContent = myAttemptField.getText().toString();
         if(GameMaster.youWin(myAttemptFieldContent)) {
             //Toast.makeText(MainActivity.this,getResources().getString(R.string.win_message),Toast.LENGTH_LONG).show();
-
-            buildSaveAlert();
+            aTimer.cancel(true);
+            //buildSaveAlert();
+            //saveRecord(0,0);
             return;
         }
 
@@ -124,11 +129,12 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton(getResources().getString(android.R.string.yes), (dialog, which) -> {
             dialog.dismiss();
             startGame(null);});
-        builder.setNegativeButton(getResources().getString(android.R.string.no),(dialog,which)->finish());
+        builder.setNegativeButton(getResources().getString(android.R.string.no),(dialog,which)->dialog.dismiss());
         builder.create().show();
     }
     private void buildSaveAlert() {
-        timer.interrupt();
+       // timer.interrupt();
+       // aTimer.cancel(true);
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         LayoutInflater inflater = getLayoutInflater();
         View screenSave = inflater.inflate(R.layout.save_record_layout,null);
@@ -163,6 +169,13 @@ public class MainActivity extends AppCompatActivity {
         });
         builder.create().show();
     }
+
+    @Override
+    public void saveRecord(int minutes, int seconds) {
+        time = String.format("%d:%d",minutes,seconds);
+        buildSaveAlert();
+    }
+
     private class GameTimer extends Thread{
         private TextView timerLabel;
         public GameTimer(TextView view) {
@@ -171,18 +184,20 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void run() {
             int minutes=0, seconds=0;
-            while(!isInterrupted()) {
-                 for(;seconds<60 && !isInterrupted();seconds++){
+           timer: while(!isInterrupted()) {
+                 for(seconds=0;seconds<60 && !isInterrupted();seconds++){
                     String timer = String.format("%d:%d",minutes,seconds);
                     runOnUiThread(()->timerLabel.setText(timer));
                     //timerLabel.post(()->timerLabel.setText(timer));
                     //timerLabel.postDelayed(()->timerLabel.setText(timer),1000);
                     SystemClock.sleep(1000);
+                    if(isInterrupted())
+                     break timer;
                 }
                 minutes++;
-                seconds=0;
+
             }
-            time = LocalTime.of(minutes/60,minutes%60,seconds);
+            time = String.format("%d:%d",minutes,seconds);
         }
     }
 }

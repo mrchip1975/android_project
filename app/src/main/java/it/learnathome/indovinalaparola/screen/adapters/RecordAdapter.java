@@ -68,6 +68,8 @@ public class RecordAdapter extends BaseAdapter {
         else if(position==2)
                 label.setTextColor(this.ctx.getResources().getColor(R.color.third_prize_colour,this.ctx.getTheme()));
         label.setText(String.valueOf(record.getAttempt()));
+        label = layout.findViewById(R.id.timerText);
+        label.setText(record.getTime());
 
     }
 }

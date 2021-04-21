@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +66,8 @@ public class RecordManager extends SQLiteOpenHelper {
               .setName(cursor.getString(cursor.getColumnIndex("name")))
               .setWord(cursor.getString(cursor.getColumnIndex("word")))
               .setAttempts(cursor.getInt(cursor.getColumnIndex("attempts")))
-              .setDate(LocalDate.ofEpochDay(cursor.getLong(cursor.getColumnIndex("date"))));
+              .setDate(LocalDate.ofEpochDay(cursor.getLong(cursor.getColumnIndex("date"))))
+              .setTime(cursor.getString(cursor.getColumnIndex("time")));
             recordList.add(rc);
         }
         return recordList;

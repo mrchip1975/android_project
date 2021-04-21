@@ -11,13 +11,13 @@ public class Record {
     private int id,attempts;
     private String name,word;
     private LocalDate date=LocalDate.now();
-    private LocalTime time;
+    private String time;
 
-    public LocalTime getTime() {
+    public String getTime() {
         return time;
     }
 
-    public Record setTime(LocalTime time) {
+    public Record setTime(String time) {
         this.time = time;
         return this;
     }
@@ -72,12 +72,12 @@ public class Record {
         values.put("word",this.word);
         values.put("attempts",this.attempts);
         values.put("date",this.date.toEpochDay());
-        values.put("time",this.date.toEpochDay());
+        values.put("time",this.time);
         return values;
     }
     @Override
     public String toString() {
-        return String.format(TEMPLATE,this.name,this.word,this.attempts,this.date.toString(),this.time.toString());
+        return String.format(TEMPLATE,this.name,this.word,this.attempts,this.date.toString(),this.time);
     }
 
 }
