@@ -8,12 +8,13 @@
 
     <Button
         android:id="@+id/button"
+        android:theme="@style/btn_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/header_textcolour"
-        android:backgroundTintMode="add"
+
         android:onClick="closeClick"
         android:text="@string/back_btn_lbl"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

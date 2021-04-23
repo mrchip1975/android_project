@@ -29,12 +29,12 @@ import it.learnathome.indovinalaparola.screen.AboutActivity;
 import it.learnathome.indovinalaparola.utils.AsyncTimer;
 import it.learnathome.indovinalaparola.utils.GameMaster;
 
-public class MainActivity extends AppCompatActivity implements AsyncTimer.Bridge {
+public class MainActivity extends AppCompatActivity  {
     private static final int ABOUT_INTENT_ID = 1;
     private int counter = 0;
     private GameTimer timer;
     private AsyncTimer aTimer;
-    private String time;
+    private static String time="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTimer.Bridge
         if(GameMaster.youWin(myAttemptFieldContent)) {
             //Toast.makeText(MainActivity.this,getResources().getString(R.string.win_message),Toast.LENGTH_LONG).show();
             aTimer.cancel(true);
-            //buildSaveAlert();
+            buildSaveAlert();
             //saveRecord(0,0);
             return;
         }
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTimer.Bridge
     }
 
     private void buildAlert() {
-
+       //
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
        builder.setTitle(getResources().getString(R.string.app_name));
         LayoutInflater inflater = getLayoutInflater();
@@ -133,8 +133,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTimer.Bridge
         builder.create().show();
     }
     private void buildSaveAlert() {
-       // timer.interrupt();
-       // aTimer.cancel(true);
+        time = String.format("%d:%d",aTimer.getMinutes(),aTimer.getSeconds());
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         LayoutInflater inflater = getLayoutInflater();
         View screenSave = inflater.inflate(R.layout.save_record_layout,null);
@@ -170,11 +169,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTimer.Bridge
         builder.create().show();
     }
 
-    @Override
-    public void saveRecord(int minutes, int seconds) {
-        time = String.format("%d:%d",minutes,seconds);
-        buildSaveAlert();
-    }
+
 
     private class GameTimer extends Thread{
         private TextView timerLabel;

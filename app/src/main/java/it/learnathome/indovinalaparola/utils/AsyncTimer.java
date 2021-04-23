@@ -10,52 +10,48 @@ import java.nio.channels.AsynchronousChannelGroup;
 
 public class AsyncTimer extends AsyncTask<Void,Integer,String> {
     private TextView labelTimer;
-    private int minutes,seconds;
-    private Bridge saver;
+    private int minutes, seconds;
 
     public AsyncTimer(TextView lbl, Context ctx) {
         this.labelTimer = lbl;
-        if(ctx instanceof  Bridge)
-            this.saver = (Bridge)ctx;
-        else throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        minutes =0;
-        seconds =0;
+        minutes = 0;
+        seconds = 0;
     }
 
     @Override
     protected String doInBackground(Void... voids) {
 
-        timer: while(!this.isCancelled()) {
-            for (; seconds < 60 && !isCancelled(); seconds++) {
-                publishProgress(minutes, seconds);
-                if(isCancelled())
+        timer:
+        while (!this.isCancelled()) {
+            for (seconds = 0; seconds < 60 && !isCancelled(); seconds++) {
+                if (isCancelled())
                     break timer;
                 SystemClock.sleep(1000);
+                publishProgress(minutes, seconds);
             }
-            Log.d("asyncTimer",String.valueOf(this.isCancelled()));
             minutes++;
         }
-        return String.format("tempo impiegato %d:%d",minutes,seconds);
+        return String.format("tempo impiegato %d:%d", minutes, seconds);
     }
 
     @Override
     protected void onProgressUpdate(Integer... values) {
         super.onProgressUpdate(values);
-        this.labelTimer.setText(String.format("%d:%d",values[0],values[1]));
-       //
+        this.labelTimer.setText(String.format("%d:%d", values[0], values[1]));
+        //
     }
 
-    @Override
-    protected void onPostExecute(String aString) {
-        saver.saveRecord(minutes,seconds);
-      //Log.d("timer_async",aString);
+    public int getMinutes() {
+        return minutes;
     }
-    public interface Bridge {
-        void saveRecord(int minutes,int seconds);
+
+    public int getSeconds() {
+        return seconds;
     }
+
 }
