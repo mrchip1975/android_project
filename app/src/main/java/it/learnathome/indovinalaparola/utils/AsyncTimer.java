@@ -12,7 +12,7 @@ public class AsyncTimer extends AsyncTask<Void,Integer,String> {
     private TextView labelTimer;
     private int minutes, seconds;
 
-    public AsyncTimer(TextView lbl, Context ctx) {
+    public AsyncTimer(TextView lbl) {
         this.labelTimer = lbl;
     }
 

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -28,20 +29,38 @@ import it.learnathome.indovinalaparola.data.RecordManager;
 import it.learnathome.indovinalaparola.screen.AboutActivity;
 import it.learnathome.indovinalaparola.utils.AsyncTimer;
 import it.learnathome.indovinalaparola.utils.GameMaster;
+import it.learnathome.indovinalaparola.utils.TimerReceiver;
+import it.learnathome.indovinalaparola.utils.TimerService;
 
 public class MainActivity extends AppCompatActivity  {
     private static final int ABOUT_INTENT_ID = 1;
     private int counter = 0;
-    private GameTimer timer;
+    //private GameTimer timer;
     private AsyncTimer aTimer;
     private static String time="";
+    private TimerReceiver receiver = new TimerReceiver();
+    private Intent timer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
                 .getColor(R.color.header_textcolour,getTheme())));
+
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(receiver,new IntentFilter(TimerService.ID_TIMER));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(receiver);
+    }
+
     public void startGame(View v) {
         TextView shuffledTextLbl = findViewById(R.id.shuffledText);
         shuffledTextLbl.setText(GameMaster.startGame(MainActivity.this));
@@ -53,9 +72,12 @@ public class MainActivity extends AppCompatActivity  {
         EditText myAttemptField = findViewById(R.id.myAttemptField);
         myAttemptField.setText("");
         /*timer = new GameTimer(findViewById(R.id.timerLbl));
-        timer.start();*/
-        aTimer = new AsyncTimer(findViewById(R.id.timerLbl),MainActivity.this);
-        aTimer.execute();
+        timer.start();
+        aTimer = new AsyncTimer(findViewById(R.id.timerLbl));
+        aTimer.execute();*/
+        timer = new Intent(MainActivity.this,TimerService.class);
+        startService(timer);
+
     }
     public void checkAttempt(View v) {
         counter++;
@@ -65,7 +87,9 @@ public class MainActivity extends AppCompatActivity  {
         String myAttemptFieldContent = myAttemptField.getText().toString();
         if(GameMaster.youWin(myAttemptFieldContent)) {
             //Toast.makeText(MainActivity.this,getResources().getString(R.string.win_message),Toast.LENGTH_LONG).show();
-            aTimer.cancel(true);
+            //aTimer.cancel(true);
+            //stopService(timer);
+            TimerService.running = false;
             buildSaveAlert();
             //saveRecord(0,0);
             return;
@@ -133,7 +157,8 @@ public class MainActivity extends AppCompatActivity  {
         builder.create().show();
     }
     private void buildSaveAlert() {
-        time = String.format("%d:%d",aTimer.getMinutes(),aTimer.getSeconds());
+        time =  ((TextView)findViewById(R.id.timerLbl)).getText().toString();
+                //String.format("%d:%d",aTimer.getMinutes(),aTimer.getSeconds());
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         LayoutInflater inflater = getLayoutInflater();
         View screenSave = inflater.inflate(R.layout.save_record_layout,null);
