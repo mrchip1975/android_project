@@ -1,4 +1,4 @@
-package it.learnathome.indovinalaparola.utils;
+package it.learnathome.indovinalaparola.utils.game;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -32,6 +32,7 @@ public class TimerService extends IntentService {
                 sendBroadcast(time);
                 SystemClock.sleep(1000);
             }
+            minutes++;
         }
     }
 

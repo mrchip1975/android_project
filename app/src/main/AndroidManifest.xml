@@ -9,21 +9,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.IndovinaLaParola">
+        <service
+            android:name=".utils.login.SignUpService"
+            android:exported="false"></service>
+
+        <activity android:name=".MainActivity" />
+
         <receiver
-            android:name=".utils.TimerReceiver"
+            android:name=".utils.game.TimerReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="it.learathome.TIMER_SERVICE"/>
+                <action android:name="it.learathome.TIMER_SERVICE" />
             </intent-filter>
         </receiver>
 
         <service
-            android:name=".utils.TimerService"
+            android:name=".utils.game.TimerService"
             android:exported="false" />
 
         <activity android:name=".screen.AboutActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".screen.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

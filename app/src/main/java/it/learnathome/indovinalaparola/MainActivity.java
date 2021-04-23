@@ -5,7 +5,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.ColorDrawable;
@@ -21,7 +20,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.time.LocalTime;
 import java.util.StringJoiner;
 
 import it.learnathome.indovinalaparola.data.Record;
@@ -29,8 +27,8 @@ import it.learnathome.indovinalaparola.data.RecordManager;
 import it.learnathome.indovinalaparola.screen.AboutActivity;
 import it.learnathome.indovinalaparola.utils.AsyncTimer;
 import it.learnathome.indovinalaparola.utils.GameMaster;
-import it.learnathome.indovinalaparola.utils.TimerReceiver;
-import it.learnathome.indovinalaparola.utils.TimerService;
+import it.learnathome.indovinalaparola.utils.game.TimerReceiver;
+import it.learnathome.indovinalaparola.utils.game.TimerService;
 
 public class MainActivity extends AppCompatActivity  {
     private static final int ABOUT_INTENT_ID = 1;
@@ -89,6 +87,7 @@ public class MainActivity extends AppCompatActivity  {
             //Toast.makeText(MainActivity.this,getResources().getString(R.string.win_message),Toast.LENGTH_LONG).show();
             //aTimer.cancel(true);
             //stopService(timer);
+            ((TextView)findViewById(R.id.yourProgressText)).setText(myAttemptFieldContent);
             TimerService.running = false;
             buildSaveAlert();
             //saveRecord(0,0);

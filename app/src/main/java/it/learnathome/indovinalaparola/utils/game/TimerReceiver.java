@@ -1,4 +1,4 @@
-package it.learnathome.indovinalaparola.utils;
+package it.learnathome.indovinalaparola.utils.game;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
