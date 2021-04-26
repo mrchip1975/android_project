@@ -35,4 +35,5 @@
     <string name="record_menu_item">Records...</string>
     <string name="personal_best_menu_item">Miei Record</string>
     <string name="back_btn_lbl">Torna alla schermata di gioco</string>
+    <string name="welcome_message">Registrazione completata con successo! Ora puoi accedere al gioco online!</string>
 </resources>

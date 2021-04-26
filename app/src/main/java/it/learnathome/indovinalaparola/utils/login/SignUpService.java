@@ -47,11 +47,11 @@ public class SignUpService extends IntentService {
                     Scanner in = new Scanner(connection.getInputStream());
                     response.putExtra("response",in.next());
                 } else {
-                    response.putExtra("response",connection.getResponseMessage());
+                    response.putExtra("response","Error "+connection.getResponseMessage());
                 }
             }
         } catch (IOException e) {
-           response.putExtra("response",e.getMessage());
+           response.putExtra("response","Error "+e.getMessage());
         } finally {
             sendBroadcast(response);
         }

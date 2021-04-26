@@ -9,9 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.IndovinaLaParola">
+        <receiver
+            android:name=".utils.login.LoginReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
         <service
             android:name=".utils.login.SignUpService"
-            android:exported="false"></service>
+            android:exported="false" />
 
         <activity android:name=".MainActivity" />
 

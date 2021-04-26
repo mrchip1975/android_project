@@ -20,13 +20,10 @@ public class TimerService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         int minutes =0,seconds=0;
-
+        Intent time = new Intent();
+        time.setAction(ID_TIMER);
         while(running) {
             for(seconds=0;seconds<60 && running ;seconds++){
-                String action = intent.getAction();
-
-                Intent time = new Intent();
-                time.setAction(ID_TIMER);
                 time.putExtra("minutes",minutes);
                 time.putExtra("seconds",seconds);
                 sendBroadcast(time);

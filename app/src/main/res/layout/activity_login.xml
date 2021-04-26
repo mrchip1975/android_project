@@ -125,6 +125,7 @@
                 android:layout_marginEnd="?attr/listPreferredItemPaddingEnd"
                 android:layout_weight="1"
                 android:backgroundTint="@color/textcolur"
+                android:onClick="signUp"
                 android:text="Registrami!"
                 app:icon="@drawable/ic_add_user" />
         </LinearLayout>
