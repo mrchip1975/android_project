@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
+import it.learnathome.indovinalaparola.MainActivity;
 import it.learnathome.indovinalaparola.R;
 
 public class LoginReceiver extends BroadcastReceiver {
@@ -14,7 +15,7 @@ public class LoginReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String response;
       switch (intent.getAction()) {
-          case SignUpService.SIGN_UP_SERVICE_ID:
+          case LoginService.SIGN_UP_SERVICE_ID:
                                                 response = intent.getStringExtra("response") ;
                                                 if(response.startsWith("Error")) {
                                                     Toast.makeText(context,response,Toast.LENGTH_LONG).show();
@@ -26,6 +27,14 @@ public class LoginReceiver extends BroadcastReceiver {
                                                     editor.commit();
                                                 }
                                                 break;
+          case LoginService.SIGN_IN_SERVICE_ID:
+                                                response = intent.getStringExtra("response");
+                                                if(response.startsWith("Error")) {
+                                                    Toast.makeText(context,response,Toast.LENGTH_LONG).show();
+                                                } else {
+                                                    Intent gameIntent = new Intent(context, MainActivity.class);
+                                                    context.startActivity(gameIntent);
+                                                }
       }
     }
 }

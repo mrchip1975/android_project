@@ -84,25 +84,9 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/attemptCounter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="0"
-                android:textColor="@color/header_textcolour"
-                android:textSize="96sp"
-                app:layout_constraintEnd_toStartOf="@+id/timerLbl"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
                 android:id="@+id/timerLbl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
                 android:layout_weight="1"
                 android:text="0:0"
                 android:textColor="@color/header_textcolour"
@@ -112,6 +96,45 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/attemptCounter"
                 app:layout_constraintTop_toTopOf="@+id/attemptCounter" />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="@dimen/piggy_bank_size"
+                android:layout_height="@dimen/piggy_bank_size"
+                android:layout_marginTop="32dp"
+                app:layout_constraintEnd_toStartOf="@+id/attemptCounter"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_piggy_bank" />
+
+            <TextView
+                android:id="@+id/attemptCounter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="0"
+                android:textColor="@color/header_textcolour"
+                android:textSize="96sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+                app:layout_constraintEnd_toStartOf="@+id/timerLbl"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/imageView6"
+                app:layout_constraintTop_toTopOf="@+id/imageView6" />
+
+            <TextView
+                android:id="@+id/piggyBankLbl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+                app:layout_constraintEnd_toEndOf="@+id/imageView6"
+                app:layout_constraintStart_toStartOf="@+id/imageView6"
+                app:layout_constraintTop_toTopOf="@+id/imageView6" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

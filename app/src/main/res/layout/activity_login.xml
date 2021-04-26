@@ -11,6 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:alpha="0.3"
+        android:onClick="signIn"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -114,6 +115,7 @@
                 android:layout_marginEnd="@dimen/header_padding"
                 android:layout_weight="1"
                 android:backgroundTint="@color/textcolur"
+                android:onClick="signIn"
                 android:text="Accedi"
                 app:icon="@drawable/ic_log_in_button" />
 

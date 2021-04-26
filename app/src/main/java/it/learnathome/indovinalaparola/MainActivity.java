@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -51,6 +52,10 @@ public class MainActivity extends AppCompatActivity  {
     protected void onResume() {
         super.onResume();
         registerReceiver(receiver,new IntentFilter(TimerService.ID_TIMER));
+        SharedPreferences preferences = getSharedPreferences("prefs_game",MODE_PRIVATE);
+        int money = preferences.getInt("gold",0);
+        TextView piggyBankLbl = findViewById(R.id.piggyBankLbl);
+        piggyBankLbl.setText(String.valueOf(money));
     }
 
     @Override

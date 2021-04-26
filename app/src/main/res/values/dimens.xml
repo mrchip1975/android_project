@@ -4,4 +4,5 @@
     <dimen name="start_img_btn">96sp</dimen>
     <dimen name="win_image_size">192sp</dimen>
     <dimen name="logo_size">256sp</dimen>
+    <dimen name="piggy_bank_size">96dp</dimen>
 </resources>
