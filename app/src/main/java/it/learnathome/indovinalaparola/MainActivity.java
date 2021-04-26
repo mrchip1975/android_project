@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,8 @@ import it.learnathome.indovinalaparola.data.RecordManager;
 import it.learnathome.indovinalaparola.screen.AboutActivity;
 import it.learnathome.indovinalaparola.utils.AsyncTimer;
 import it.learnathome.indovinalaparola.utils.GameMaster;
+import it.learnathome.indovinalaparola.utils.game.SaveRecordReceiver;
+import it.learnathome.indovinalaparola.utils.game.SaveRecordService;
 import it.learnathome.indovinalaparola.utils.game.TimerReceiver;
 import it.learnathome.indovinalaparola.utils.game.TimerService;
 
@@ -38,6 +41,7 @@ public class MainActivity extends AppCompatActivity  {
     private AsyncTimer aTimer;
     private static String time="";
     private TimerReceiver receiver = new TimerReceiver();
+    private SaveRecordReceiver sReceiver = new SaveRecordReceiver();
     private Intent timer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,7 @@ public class MainActivity extends AppCompatActivity  {
     protected void onResume() {
         super.onResume();
         registerReceiver(receiver,new IntentFilter(TimerService.ID_TIMER));
+        registerReceiver(sReceiver,new IntentFilter(SaveRecordService.SAVE_SERVICE_ID));
         SharedPreferences preferences = getSharedPreferences("prefs_game",MODE_PRIVATE);
         int money = preferences.getInt("gold",0);
         TextView piggyBankLbl = findViewById(R.id.piggyBankLbl);
@@ -62,6 +67,7 @@ public class MainActivity extends AppCompatActivity  {
     protected void onStop() {
         super.onStop();
         unregisterReceiver(receiver);
+        unregisterReceiver(sReceiver);
     }
 
     public void startGame(View v) {
@@ -191,6 +197,12 @@ public class MainActivity extends AppCompatActivity  {
              .setWord(GameMaster.getSecretWord())
              .setTime(time);
             new RecordManager(MainActivity.this).insert(r);
+            CheckBox saveRanking = screenSave.findViewById(R.id.saveWorldChk);
+            if (saveRanking.isChecked()) {
+                Intent rankingIntent = new Intent(MainActivity.this, SaveRecordService.class);
+                rankingIntent.putExtra("record",r);
+                startService(rankingIntent);
+            }
             Toast.makeText(MainActivity.this,getString(R.string.record_saved),Toast.LENGTH_LONG).show();
             dialog.dismiss();
             buildAlert();

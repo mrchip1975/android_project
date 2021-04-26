@@ -1,11 +1,14 @@
 package it.learnathome.indovinalaparola.data;
 
 import android.content.ContentValues;
+import android.os.Parcel;
+import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Record {
+public class Record implements Serializable {
     private final static String TEMPLATE = "Nome Giocatore:%s - Parola: %s%nTentativi:%d%n" +
             "Data:%s - Tempo Impiegato:%s";
     private int id,attempts;
@@ -79,5 +82,6 @@ public class Record {
     public String toString() {
         return String.format(TEMPLATE,this.name,this.word,this.attempts,this.date.toString(),this.time);
     }
+
 
 }
