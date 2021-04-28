@@ -13,7 +13,7 @@ public class Record implements Serializable {
             "Data:%s - Tempo Impiegato:%s";
     private int id,attempts;
     private String name,word;
-    private LocalDate date=LocalDate.now();
+    private String date=LocalDate.now().toString();
     private String time;
 
     public String getTime() {
@@ -61,12 +61,12 @@ public class Record implements Serializable {
         return this;
     }
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
     public Record setDate(LocalDate date) {
-        this.date = date;
+        this.date = date.toString();
         return this;
     }
     public ContentValues convertToContent() {
@@ -74,7 +74,7 @@ public class Record implements Serializable {
         values.put("name",this.name);
         values.put("word",this.word);
         values.put("attempts",this.attempts);
-        values.put("date",this.date.toEpochDay());
+        values.put("date",this.date);
         values.put("time",this.time);
         return values;
     }

@@ -24,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         registerReceiver(receiver,new IntentFilter(SignUpService.SIGN_UP_SERVICE_ID));
         registerReceiver(receiver,new IntentFilter(SignInService.SIGN_IN_SERVICE_ID));
-    }
+        }
 
     @Override
     protected void onResume() {

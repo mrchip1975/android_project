@@ -55,6 +55,7 @@ public class SaveRecordService extends IntentService {
                 }
             }
         } catch(IOException ex) {
+            Log.e("dws",ex.getMessage());
             response.putExtra("response","Error "+ex.getMessage());
         } finally {
             sendBroadcast(response);

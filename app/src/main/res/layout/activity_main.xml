@@ -31,7 +31,6 @@
             android:layout_height="@dimen/start_img_btn"
             android:onClick="startGame"
             app:srcCompat="@drawable/ic_racing_flag" />
-
         <TextView
             android:id="@+id/shuffledText"
             android:layout_width="match_parent"

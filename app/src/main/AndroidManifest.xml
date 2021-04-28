@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IndovinaLaParola">
         <service
+            android:name=".utils.game.DownloadRecordService"
+            android:exported="false"></service>
+        <service
             android:name=".utils.game.SaveRecordService"
             android:exported="false" />
         <service
@@ -51,9 +54,13 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="it.learnathome.SAVE_ID"/>
+                <action android:name="it.learnathome.SAVE_ID" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="it.learnathome.DOWNLOAD_ID"/>
             </intent-filter>
         </receiver>
+
         <activity android:name=".MainActivity" />
         <activity android:name=".screen.AboutActivity" />
         <activity android:name=".screen.LoginActivity">

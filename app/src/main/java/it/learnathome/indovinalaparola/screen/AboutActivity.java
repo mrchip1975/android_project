@@ -31,7 +31,7 @@ public class AboutActivity extends AppCompatActivity {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.contentArea,id==R.id.aboutMenuItem?new AboutFragment():
-                id==R.id.personalBest?new RecordFragment().setRecordType(id):new CreditsFragment());
+                (id==R.id.personalBest||id==R.id.worldBest)?new RecordFragment().setRecordType(id):new CreditsFragment());
         transaction.commit();
     }
     public void closeClick(View v) {

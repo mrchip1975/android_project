@@ -8,6 +8,9 @@
             <item
                 android:id="@+id/personalBest"
                 android:title="@string/personal_best_menu_item" />
+            <item
+                android:id="@+id/worldBest"
+                android:title="@string/world_best_menu_item" />
         </menu>
     </item>
     <item

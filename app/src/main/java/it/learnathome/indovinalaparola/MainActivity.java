@@ -8,10 +8,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,6 +38,10 @@ import it.learnathome.indovinalaparola.utils.game.TimerService;
 
 public class MainActivity extends AppCompatActivity  {
     private static final int ABOUT_INTENT_ID = 1;
+    private static final int MONEY_PRICE = 20;
+    private static final String COLOUR_TEMPLATE="#%s%s00";
+    private int red = 0;
+    private int green = 255;
     private int counter = 0;
     //private GameTimer timer;
     private AsyncTimer aTimer;
@@ -61,6 +67,11 @@ public class MainActivity extends AppCompatActivity  {
         int money = preferences.getInt("gold",0);
         TextView piggyBankLbl = findViewById(R.id.piggyBankLbl);
         piggyBankLbl.setText(String.valueOf(money));
+        //System.out.println("dws2"+String.format(COLOUR_TEMPLATE,Integer.toHexString(red),Integer.toHexString(green)));
+        ((TextView)findViewById(R.id.attemptCounter)).setTextColor(Color.parseColor(String.format(COLOUR_TEMPLATE,
+                Integer.toHexString(red).length()<2?"0"+Integer.toHexString(red):Integer.toHexString(red),
+                Integer.toHexString(green).length()<1?"0"+Integer.toHexString(green):Integer.toHexString(green))));
+
     }
 
     @Override
@@ -90,7 +101,12 @@ public class MainActivity extends AppCompatActivity  {
     }
     public void checkAttempt(View v) {
         counter++;
+        red+=12;
+        green-=12;
         TextView attemptCounterLbl = findViewById(R.id.attemptCounter);
+        attemptCounterLbl.setTextColor(Color.parseColor(String.format(COLOUR_TEMPLATE,
+                Integer.toHexString(red).length()<2?"0"+Integer.toHexString(red):Integer.toHexString(red),
+                Integer.toHexString(green).length()<1?"0"+Integer.toHexString(green):Integer.toHexString(green))));
         attemptCounterLbl.setText(String.valueOf(counter));
         EditText myAttemptField = findViewById(R.id.myAttemptField);
         String myAttemptFieldContent = myAttemptField.getText().toString();
@@ -131,8 +147,10 @@ public class MainActivity extends AppCompatActivity  {
             case R.id.creditsMenuItem:
             case R.id.aboutMenuItem:
             case R.id.personalBest:
+            case R.id.worldBest:
                     aboutIntent.putExtra("id",id);
                  break;
+
         }
         startActivityForResult(aboutIntent,ABOUT_INTENT_ID);
         return super.onOptionsItemSelected(item);
@@ -168,7 +186,8 @@ public class MainActivity extends AppCompatActivity  {
     }
     private void buildSaveAlert() {
         time =  ((TextView)findViewById(R.id.timerLbl)).getText().toString();
-                //String.format("%d:%d",aTimer.getMinutes(),aTimer.getSeconds());
+        int moneyForYou = (int)(MONEY_PRICE*(1-(0.1*(counter-1))));
+        if(moneyForYou>0) updateMoneyBank(moneyForYou);
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         LayoutInflater inflater = getLayoutInflater();
         View screenSave = inflater.inflate(R.layout.save_record_layout,null);
@@ -209,7 +228,13 @@ public class MainActivity extends AppCompatActivity  {
         });
         builder.create().show();
     }
-
+    private void updateMoneyBank(int money) {
+        SharedPreferences prefs = getSharedPreferences("prefs_game", MODE_PRIVATE);
+        int oldMoney = prefs.getInt("gold",100);
+        oldMoney+=money;
+        prefs.edit().putInt("gold",oldMoney).commit();
+        ((TextView)findViewById(R.id.piggyBankLbl)).setText(String.valueOf(oldMoney));
+    }
 
 
     private class GameTimer extends Thread{
