@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">Indovina La Parola</string>
-    <string name="version_label">Ver.2.2.1</string>
+    <string name="version_label">Ver.2.2.3</string>
     <string name="hint_player_attempt">Scrivi una parola</string>
     <string name="check_attempt_btn_lbl">Verifica Tentativo!</string>
     <string name="win_message">Complimenti hai indovinato la parola segreta!\nNuova Partita?</string>
@@ -37,4 +36,5 @@
     <string name="back_btn_lbl">Torna alla schermata di gioco</string>
     <string name="welcome_message">Registrazione completata con successo! Ora puoi accedere al gioco online!</string>
     <string name="world_best_menu_item">Classifica Mondiale</string>
+    <string name="app_name">Indovina la Parola</string>
 </resources>

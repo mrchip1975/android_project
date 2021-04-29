@@ -29,7 +29,7 @@ public class GameMaster {
         return cryptedText;
     }
     private static String shuffleWord(String word) {
-        char shuffledText[] = new char[word.length()*2];
+        char shuffledText[] = new char[20];
         for (char ch:word.toCharArray()) {
             shuffledText[getEmptyLocation(shuffledText)] = ch;
         }
@@ -55,7 +55,8 @@ public class GameMaster {
         }
         return buffer.toString();
     }
-    public static String updateShuffledText(String shuffledText) {
+    public static int updateShuffledText(String shuffledText) {
+        int position;
         if(shuffledText.length()>GameMaster.secretWord.length()) {
             List<Character> chars;
             do {
@@ -63,13 +64,14 @@ public class GameMaster {
                 for (char ch:shuffledText.toCharArray()) {
                     chars.add(Character.valueOf(ch));
                 }
-                chars.remove(Character.valueOf(shuffledText.charAt(selector.nextInt(shuffledText.length()))));
+                position = selector.nextInt(shuffledText.length());
+                chars.remove(Character.valueOf(shuffledText.charAt(position)));
                 if(isValid(chars))
                     break;
             } while(true);
 
-            return chars.toString().replace("[","").replace("]","").replaceAll(", ","");
-        } else return shuffledText;
+            return position;
+        } else return -1;
     }
     private static boolean isValid(List<Character> availableChars) {
         List<Character> copy = new ArrayList<>(availableChars);

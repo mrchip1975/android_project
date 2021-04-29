@@ -31,10 +31,13 @@
             android:layout_height="@dimen/start_img_btn"
             android:onClick="startGame"
             app:srcCompat="@drawable/ic_racing_flag" />
-        <TextView
+
+        <LinearLayout
             android:id="@+id/shuffledText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
             android:paddingTop="?attr/dialogPreferredPadding"
             android:paddingBottom="?attr/dialogPreferredPadding"
             android:textAlignment="center"
@@ -68,6 +71,8 @@
             android:id="@+id/checkBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="?attr/dialogPreferredPadding"
+            android:layout_marginEnd="?attr/dialogPreferredPadding"
             android:backgroundTint="@color/header_textcolour"
             android:fontFamily="@font/baloo_bhaina"
             android:onClick="checkAttempt"
@@ -79,7 +84,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
@@ -135,6 +140,11 @@
                 app:layout_constraintStart_toStartOf="@+id/imageView6"
                 app:layout_constraintTop_toTopOf="@+id/imageView6" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"></LinearLayout>
 
 
     </LinearLayout>

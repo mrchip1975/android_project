@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/letter"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/textview_roundborder"
+    android:gravity="center"
+    android:text="A"
+    android:textAlignment="center"
+    android:textSize="24dp"
+    android:minHeight="24dp"
+    android:maxHeight="48dp"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp"
+    android:textStyle="bold">
+
+</TextView>
