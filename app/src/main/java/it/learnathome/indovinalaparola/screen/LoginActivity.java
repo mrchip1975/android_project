@@ -2,13 +2,19 @@ package it.learnathome.indovinalaparola.screen;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+
+import java.util.zip.Inflater;
 
 import it.learnathome.indovinalaparola.R;
 import it.learnathome.indovinalaparola.utils.login.LoginReceiver;
@@ -18,6 +24,7 @@ import it.learnathome.indovinalaparola.utils.login.SignUpService;
 
 public class LoginActivity extends AppCompatActivity {
     private LoginReceiver receiver = new LoginReceiver();
+    private int avatarCounter = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +42,9 @@ public class LoginActivity extends AppCompatActivity {
             field.setText(preferences.getString("username",""));
             field = findViewById(R.id.passwordField);
             field.setText(preferences.getString("password",""));
+            Log.d("avatar",preferences.getString("avatar","avat0"));
+            int idAvatar = getResources().getIdentifier(preferences.getString("avatar","avat0"),"drawable",getPackageName());
+            ((ImageView)findViewById(R.id.myAvatar)).setImageResource(idAvatar);
         }
     }
 
@@ -49,7 +59,14 @@ public class LoginActivity extends AppCompatActivity {
         return intent;
     }
     public void signUp(View view) {
-        startService(buildIntent("registration"));
+        buildAvatarChooser();
+
+    }
+    public void changeAvatar(View view) {
+        avatarCounter++;
+        avatarCounter%=7;
+        int idAvatar = getResources().getIdentifier("avat"+avatarCounter,"drawable",getPackageName());
+        ((ImageView)view).setImageResource(idAvatar);
     }
     public void signIn(View view) {
          startService(buildIntent("login"));
@@ -62,7 +79,19 @@ public class LoginActivity extends AppCompatActivity {
             editor.commit();
         }
     }
-
+    private void buildAvatarChooser() {
+        View view = LayoutInflater.from(this).inflate(R.layout.avatar_chooser,null);
+        view.findViewById(R.id.avatarBtn).setOnClickListener(v->changeAvatar(v));
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(view);
+        builder.setCancelable(false);
+        builder.setPositiveButton(getResources().getString(android.R.string.ok),((dialog, which) -> {
+            getSharedPreferences("prefs_game",MODE_PRIVATE).edit().putString("avatar","avat"+String.valueOf(avatarCounter%7)).commit();
+            dialog.dismiss();
+            startService(buildIntent("registration"));
+        }));
+        builder.create().show();
+    }
     @Override
     protected void onStop() {
         super.onStop();

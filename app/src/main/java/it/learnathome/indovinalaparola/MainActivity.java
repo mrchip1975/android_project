@@ -2,11 +2,14 @@ package it.learnathome.indovinalaparola;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.slidingpanelayout.widget.SlidingPaneLayout;
 
 import android.Manifest;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -34,9 +37,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.w3c.dom.Text;
 
@@ -73,6 +79,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SlidingPaneLayout sliding = findViewById(R.id.slidingLayout);
+        final ActionBar actionBar = getSupportActionBar();
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View layout = inflater.inflate(R.layout.my_actionbar,null);
+        ImageView burgerBtn = layout.findViewById(R.id.burgerBtn);
+        //int idAvatar = this.getResources().getIdentifier(getSharedPreferences("prefs_game",MODE_PRIVATE).getString("avatar","avat0"),"drawable",this.getPackageName());
+        //burgerBtn.setImageResource(idAvatar);
+        burgerBtn.setOnClickListener(v->{
+            if (sliding.isOpen()) {
+                sliding.closePane();
+            } else {
+                sliding.openPane();
+            }
+        });
+
+        actionBar.setCustomView(layout);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
                 .getColor(R.color.header_textcolour, getTheme())));
         animMove = AnimationUtils.loadAnimation(getApplicationContext(),
@@ -104,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void startGame(View v) {
         LinearLayout shuffledTextLayout = findViewById(R.id.shuffledText);
-        shuffledText = new StringBuilder(GameMaster.startGame(MainActivity.this));
+        shuffledText = new StringBuilder(GameMaster.startGame());
         populateLayout(shuffledTextLayout, shuffledText.toString());
         TextView yourProgressLbl = findViewById(R.id.yourProgressText);
         yourProgressLbl.setText(GameMaster.buildCryptedWord());
@@ -271,7 +295,9 @@ public class MainActivity extends AppCompatActivity {
                 rankingIntent.putExtra("record",r);
                 startService(rankingIntent);
             }
-            Toast.makeText(MainActivity.this,getString(R.string.record_saved),Toast.LENGTH_LONG).show();
+
+            Snackbar.make(findViewById(R.id.main_layout),getString(R.string.record_saved),Snackbar.LENGTH_LONG).show();
+           // Toast.makeText(MainActivity.this,getString(R.string.record_saved),Toast.LENGTH_LONG).show();
             dialog.dismiss();
             buildAlert();
         });

@@ -50,6 +50,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7">
 
+        <ImageView
+            android:id="@+id/myAvatar"
+            android:layout_width="@dimen/piggy_bank_size"
+            android:layout_height="@dimen/piggy_bank_size"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/avat0" />
+
         <TextView
             android:id="@+id/textView10"
             android:layout_width="match_parent"

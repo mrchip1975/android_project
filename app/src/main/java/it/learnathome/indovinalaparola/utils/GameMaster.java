@@ -17,8 +17,9 @@ public class GameMaster {
     private static Random selector = new Random();
 
     private GameMaster() {}
-    public static String startGame(Context ctx) {
-        GameMaster.secretWord = WordSelector.getWord(ctx);
+    public static String startGame() {
+
+        GameMaster.secretWord = WordSelector.getInstance().getWord();
         return shuffleWord(GameMaster.secretWord);
     }
     public static String buildCryptedWord() {

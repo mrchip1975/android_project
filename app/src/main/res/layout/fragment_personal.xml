@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screen.fragments.PersonalFragment">
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/header_textcolour"
+        android:fontFamily="@font/baloo_bhaina"
+        android:text="@string/personal_info_header_lbl"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/avatarImg"
+        android:layout_width="@dimen/win_image_size"
+        android:layout_height="@dimen/win_image_size"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/avat0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+    <Button
+        android:id="@+id/changeAvatarBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:backgroundTint="@color/header_textcolour"
+        android:backgroundTintMode="src_over"
+        android:text="@string/change_avatar_btn_lbl"
+        app:layout_constraintEnd_toEndOf="@+id/avatarImg"
+        app:layout_constraintStart_toStartOf="@+id/avatarImg"
+        app:layout_constraintTop_toBottomOf="@+id/avatarImg" />
+</androidx.constraintlayout.widget.ConstraintLayout>

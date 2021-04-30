@@ -37,4 +37,8 @@
     <string name="welcome_message">Registrazione completata con successo! Ora puoi accedere al gioco online!</string>
     <string name="world_best_menu_item">Classifica Mondiale</string>
     <string name="app_name">Indovina la Parola</string>
+    <string name="avatart_chooser_header_text">Scegli il tuo Avatar</string>
+    <string name="hint_avatar_choose">Clicca sull\'immagine per scegliere</string>
+    <string name="personal_info_header_lbl">Il Mio Profilo</string>
+    <string name="change_avatar_btn_lbl">Cambia Avatar</string>
 </resources>

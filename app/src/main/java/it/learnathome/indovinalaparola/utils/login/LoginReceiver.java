@@ -4,13 +4,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import it.learnathome.indovinalaparola.MainActivity;
 import it.learnathome.indovinalaparola.R;
+import it.learnathome.indovinalaparola.screen.LoginActivity;
 
 public class LoginReceiver extends BroadcastReceiver {
-
     @Override
     public void onReceive(Context context, Intent intent) {
         String response;
@@ -25,6 +26,9 @@ public class LoginReceiver extends BroadcastReceiver {
                                                     SharedPreferences.Editor editor = preferences.edit();
                                                     editor.putInt("gold",100);
                                                     editor.commit();
+                                                    ImageView avatar = ((LoginActivity)context).findViewById(R.id.myAvatar);
+                                                    int idAvatar = context.getResources().getIdentifier(preferences.getString("avatar","avat0"),"drawable",context.getPackageName());
+                                                    avatar.setImageResource(idAvatar);
                                                 }
                                                 break;
           case LoginService.SIGN_IN_SERVICE_ID:
