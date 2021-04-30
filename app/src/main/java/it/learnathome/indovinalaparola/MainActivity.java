@@ -41,7 +41,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import static it.learnathome.indovinalaparola.utils.game.Helper.*;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.w3c.dom.Text;
@@ -55,12 +55,14 @@ import it.learnathome.indovinalaparola.data.RecordManager;
 import it.learnathome.indovinalaparola.screen.AboutActivity;
 import it.learnathome.indovinalaparola.utils.AsyncTimer;
 import it.learnathome.indovinalaparola.utils.GameMaster;
+import it.learnathome.indovinalaparola.utils.game.Helper;
 import it.learnathome.indovinalaparola.utils.game.SaveRecordReceiver;
 import it.learnathome.indovinalaparola.utils.game.SaveRecordService;
 import it.learnathome.indovinalaparola.utils.game.TimerReceiver;
 import it.learnathome.indovinalaparola.utils.game.TimerService;
 
 public class MainActivity extends AppCompatActivity {
+
     private static final int ABOUT_INTENT_ID = 1;
     private static final int MONEY_PRICE = 20;
     private static final String COLOUR_TEMPLATE = "#%s%s00";
@@ -74,7 +76,24 @@ public class MainActivity extends AppCompatActivity {
     private Intent timer;
     private StringBuilder shuffledText;
     private Animation animMove;
-
+    private Helper helper = new Helper();
+    private String helpAvailable(int gold) {
+        if(FIFTY_FIFTY_HELP_COST+POLLING_HELP_COST+REVERSE_HELP_COST<=gold)
+            return "all";
+        else if(FIFTY_FIFTY_HELP_COST+REVERSE_HELP_COST<=gold)
+            return "50,reverse";
+        else if(POLLING_HELP_COST+REVERSE_HELP_COST<=gold)
+            return "polling,reverse";
+        else if(FIFTY_FIFTY_HELP_COST+POLLING_HELP_COST<=gold)
+            return "50,polling";
+        else if(REVERSE_HELP_COST<=gold)
+            return "reverse";
+        else if(FIFTY_FIFTY_HELP_COST<=gold)
+            return "50";
+        else if(POLLING_HELP_COST<=gold)
+            return "polling";
+        else return "buy";
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(sReceiver, new IntentFilter(SaveRecordService.SAVE_SERVICE_ID));
         SharedPreferences preferences = getSharedPreferences("prefs_game", MODE_PRIVATE);
         int money = preferences.getInt("gold", 100);
+        customizeHelpBar(helpAvailable(money));
         TextView piggyBankLbl = findViewById(R.id.piggyBankLbl);
         piggyBankLbl.setText(String.valueOf(money));
         ((TextView) findViewById(R.id.attemptCounter)).setTextColor(Color.parseColor(String.format(COLOUR_TEMPLATE,
@@ -125,7 +145,21 @@ public class MainActivity extends AppCompatActivity {
         unregisterReceiver(receiver);
         unregisterReceiver(sReceiver);
     }
-
+    private void customizeHelpBar(String helps) {
+       if("all".equals(helps.trim()))
+           return;
+        switch(helps) {
+            default:findViewById(R.id.reverse).setVisibility(View.GONE);
+            case "reverse": findViewById(R.id.fiftyFifty).setVisibility(View.GONE);
+            case "50,reverse": findViewById(R.id.polling).setVisibility(View.GONE);
+                               break;
+            case "polling": findViewById(R.id.reverse).setVisibility(View.GONE);
+            case "polling,reverse": findViewById(R.id.fiftyFifty).setVisibility(View.GONE);
+                                    break;
+            case "50": findViewById(R.id.polling).setVisibility(View.GONE);
+            case "50,polling": findViewById(R.id.reverse).setVisibility(View.GONE);
+        }
+    }
     public void startGame(View v) {
         LinearLayout shuffledTextLayout = findViewById(R.id.shuffledText);
         shuffledText = new StringBuilder(GameMaster.startGame());
@@ -309,6 +343,18 @@ public class MainActivity extends AppCompatActivity {
         oldMoney+=money;
         prefs.edit().putInt("gold",oldMoney).commit();
         ((TextView)findViewById(R.id.piggyBankLbl)).setText(String.valueOf(oldMoney));
+    }
+    public void helpClick(View source) {
+        int id = source.getId();
+        TextView piggyBankMoney = findViewById(R.id.piggyBankLbl);
+        int currentMoney = Integer.valueOf(piggyBankMoney.getText().toString());
+        switch (id) {
+            case R.id.polling: currentMoney-=POLLING_HELP_COST; break;
+            case R.id.reverse: currentMoney-=REVERSE_HELP_COST; break;
+            case R.id.fiftyFifty: currentMoney-=FIFTY_FIFTY_HELP_COST;break;
+        }
+        source.setEnabled(false);
+        piggyBankMoney.setText(String.valueOf(currentMoney));
     }
 
 

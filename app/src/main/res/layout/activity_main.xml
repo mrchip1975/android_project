@@ -180,6 +180,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
+                    android:id="@+id/helperToolbar"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/start_img_btn"
                     android:layout_marginTop="?attr/dialogPreferredPadding"
@@ -187,10 +188,11 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/fiftyPercent"
+                        android:id="@+id/fiftyFifty"
                         android:layout_width="@dimen/logo_size"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onClick="helpClick"
                         app:srcCompat="@drawable/ic_50_percent" />
 
                     <ImageView
@@ -198,13 +200,15 @@
                         android:layout_width="@dimen/logo_size"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onClick="helpClick"
                         app:srcCompat="@drawable/ic_reflect" />
 
                     <ImageView
-                        android:id="@+id/possibility"
+                        android:id="@+id/polling"
                         android:layout_width="@dimen/logo_size"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:onClick="helpClick"
                         app:srcCompat="@drawable/ic_charts" />
 
                 </LinearLayout>

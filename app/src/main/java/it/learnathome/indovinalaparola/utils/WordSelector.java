@@ -21,8 +21,10 @@ import it.learnathome.indovinalaparola.R;
     private final static Random selector = new Random();
     private String[] words;
     private static WordSelector instance = null;
+    private WordsDownloader thread;
     private WordSelector(){
-        new WordsDownloader().start();
+        this.thread = new WordsDownloader();
+        this.thread.start();
     }
     public static WordSelector getInstance() {
         if(instance==null) {
@@ -31,7 +33,14 @@ import it.learnathome.indovinalaparola.R;
         return instance;
     }
     public String getWord() {
-        return words[selector.nextInt(words.length)];
+        String word="";
+        try {
+            this.thread.join();
+            word = words[selector.nextInt(words.length)];
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+      return word;
     }
     private class WordsDownloader extends Thread {
         private final static String SCRIPT_URL = "https://corsipca.altervista.org/indovina_la_parola/download_word.php";
@@ -45,8 +54,7 @@ import it.learnathome.indovinalaparola.R;
                 String message = lettore.nextLine();
                 Gson parser = new Gson();
                 words = parser.fromJson(message,String[].class);
-                Log.d("vettore", Arrays.toString(words));
-            } catch(IOException ex) {
+               } catch(IOException ex) {
                 Log.e("WordsDownloader",ex.getMessage());
             }
         }
